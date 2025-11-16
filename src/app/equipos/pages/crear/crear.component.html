@@ -1,0 +1,60 @@
+<div class="container py-4">
+  <div class="custom-card p-4 mb-4">
+    <h3 class="fw-bold mb-3">Crear Nuevo Equipo</h3>
+
+    <form (ngSubmit)="crearEquipo()" #form="ngForm">
+
+      <div class="mb-3">
+        <label class="form-label">Nombre del equipo</label>
+        <input 
+          type="text" 
+          class="form-control"
+          [(ngModel)]="equipo.nombre"
+          name="nombre"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Ciudad</label>
+        <input 
+          type="text" 
+          class="form-control"
+          [(ngModel)]="equipo.ciudad"
+          name="ciudad"
+          required
+        />
+      </div>
+     
+      <div class="mb-3">
+        <label class="form-label">Estadio</label>
+        <input 
+          type="text" 
+          class="form-control"
+          [(ngModel)]="equipo.estadio"
+          name="estadio"
+          required
+        />
+
+      <div class="mb-3">
+        <label class="form-label">Año de fundación</label>
+        <input 
+          type="number" 
+          class="form-control"
+          [(ngModel)]="equipo.anioFundacion"
+          name="anioFundacion"
+          required
+        />
+      </div>
+
+      <button class="btn btn-primary btn-rounded" [disabled]="form.invalid">
+        Guardar
+      </button>
+
+      <a routerLink="/equipos" class="btn btn-outline-secondary btn-rounded ms-2">
+        Cancelar
+      </a>
+ 
+  </div>
+    </form>
+</div>

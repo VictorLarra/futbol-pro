@@ -1,0 +1,12 @@
+table {
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+
+tr {
+  background: white;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+}

@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { EquiposService } from '../../services/equipos.service';
 import { RouterLink } from '@angular/router';
@@ -14,8 +15,9 @@ import { Equipo } from '../../interfaces/equipo.interface';
 })
 export class ListarEquiposComponent implements OnInit {
   
-
-  equipos: any[] = [];
+  equipos: Equipo[] = [];
+  loading: boolean = false;
+  error: string = '';
 
   constructor(private equiposService: EquiposService) {}
 
@@ -24,12 +26,18 @@ export class ListarEquiposComponent implements OnInit {
   }
 
   obtenerEquipos() {
+    this.loading = true;
+    this.error = '';
+    
     this.equiposService.getAll().subscribe({
-      next: (data: any) => {
+      next: (data: Equipo[]) => {
         this.equipos = data;
+        this.loading = false;
       },
       error: (error: any) => {
         console.error('Error al obtener equipos', error);
+        this.error = 'Error al cargar los equipos';
+        this.loading = false;
       }
     });
   }
@@ -42,9 +50,9 @@ export class ListarEquiposComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error al eliminar equipo', error);
+          alert('Error al eliminar el equipo');
         }
       });
     }
   }
-
 }

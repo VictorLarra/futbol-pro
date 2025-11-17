@@ -16,7 +16,7 @@ export class CrearEquipoComponent {
     nombre: '',
     ciudad: '',
     estadio: '',
-    anioFundacion: null
+    anio_fundacion: 0
   };
 
   constructor(

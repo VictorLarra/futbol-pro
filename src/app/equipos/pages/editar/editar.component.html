@@ -26,6 +26,16 @@
           required
         />
       </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Estadio</label>
+        <input 
+          type="text" 
+          class="form-control"
+          [(ngModel)]="equipo.estadio"
+          name="estadio"
+          required
+        />
 
       <div class="mb-3">
         <label class="form-label">Año de fundación</label>
@@ -45,7 +55,7 @@
       <a routerLink="/equipos" class="btn btn-outline-secondary btn-rounded ms-2">
         Cancelar
       </a>
-    </form>
+  
   </div>
-
+</form>
 </div>

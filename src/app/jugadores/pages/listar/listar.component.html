@@ -1,8 +1,8 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Equipos</h2>
-    <a routerLink="/equipos/crear" class="btn btn-primary btn-rounded">
-      + Crear Equipo
+    <h2 class="fw-bold">Jugadores</h2>
+    <a routerLink="/jugadores/crear" class="btn btn-primary btn-rounded">
+      + Crear Jugador
     </a>
   </div>
 
@@ -11,7 +11,7 @@
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Cargando...</span>
     </div>
-    <p class="mt-2">Cargando equipos...</p>
+    <p class="mt-2">Cargando jugadores...</p>
   </div>
 
   <!-- Error State -->
@@ -25,29 +25,29 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Ciudad</th>
-          <th>Estadio</th>
-          <th>Fundación</th>
+          <th>Posición</th> 
+          <th>Edad</th>
+          <th>ID Equipo</th>
           <th>Acciones</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let equipo of equipos">
-          <td>{{ equipo.nombre }}</td>
-          <td>{{ equipo.ciudad }}</td>
-          <td>{{ equipo.estadio }}</td>
-          <td>{{ equipo.anio_fundacion }}</td> <!-- Cambiado a anio_fundacion -->
+        <tr *ngFor="let jugador of jugadores">
+          <td>{{ jugador.nombre }}</td>
+          <td>{{ jugador.posicion }}</td> 
+          <td>{{ jugador.edad }}</td>
+          <td>{{ jugador.id_equipo || 'Sin equipo' }}</td>
 
           <td>
             <div class="d-flex gap-2">
               <button class="btn btn-sm btn-outline-secondary btn-rounded"
-                      [routerLink]="['/equipos/editar', equipo.id]">
+                      [routerLink]="['/jugadores/editar', jugador.id]">
                 Editar
               </button>
 
               <button class="btn btn-sm btn-outline-danger btn-rounded"
-                      (click)="eliminarEquipo(equipo.id)">
+                      (click)="eliminarJugador(jugador.id)">
                 Eliminar
               </button>
             </div>
@@ -55,11 +55,11 @@
         </tr>
 
         <!-- Empty State -->
-        <tr *ngIf="equipos.length === 0">
+        <tr *ngIf="jugadores.length === 0">
           <td colspan="5" class="text-center py-4">
-            <p class="text-muted">No hay equipos registrados</p>
-            <a routerLink="/equipos/crear" class="btn btn-primary btn-sm">
-              Crear primer equipo
+            <p class="text-muted">No hay jugadores registrados</p>
+            <a routerLink="/jugadores/crear" class="btn btn-primary btn-sm">
+              Crear primer jugador
             </a>
           </td>
         </tr>

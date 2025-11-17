@@ -10,7 +10,7 @@ import { Equipo } from '../interfaces/equipo.interface';
 
 export class EquiposService {
 
-  private apiUrl = 'http://localhost:5028/api/equipos';
+  private apiUrl = 'http://localhost:5028/api/Teams';
 
   constructor(private http: HttpClient) {}
 

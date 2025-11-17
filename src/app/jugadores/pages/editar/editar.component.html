@@ -1,0 +1,104 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Editar Jugador</h2>
+    <a routerLink="/jugadores" class="btn btn-outline-secondary btn-rounded">
+      ← Volver a Jugadores
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">{{ error ? 'Actualizando jugador...' : 'Cargando datos del jugador...' }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Form -->
+  <div *ngIf="!loading" class="custom-card p-4">
+    <form [formGroup]="jugadorForm" (ngSubmit)="onSubmit()">
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Nombre <span class="text-danger">*</span></label>
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="nombre"
+            [class.is-invalid]="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
+            El nombre es requerido
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Posición <span class="text-danger">*</span></label>
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="posicion"
+            [class.is-invalid]="jugadorForm.get('posicion')?.invalid && jugadorForm.get('posicion')?.touched">
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('posicion')?.invalid && jugadorForm.get('posicion')?.touched">
+            La posición es requerida
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Edad <span class="text-danger">*</span></label>
+          <input 
+            type="number" 
+            class="form-control" 
+            formControlName="edad"
+            min="16"
+            max="50"
+            [class.is-invalid]="jugadorForm.get('edad')?.invalid && jugadorForm.get('edad')?.touched">
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('edad')?.errors?.['required'] && jugadorForm.get('edad')?.touched">
+            La edad es requerida
+          </div>
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('edad')?.errors?.['min'] && jugadorForm.get('edad')?.touched">
+            La edad mínima es 16 años
+          </div>
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('edad')?.errors?.['max'] && jugadorForm.get('edad')?.touched">
+            La edad máxima es 50 años
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">ID Equipo</label>
+          <input 
+            type="number" 
+            class="form-control" 
+            formControlName="id_equipo"
+            placeholder="Opcional">
+          <div class="form-text">
+            Dejar vacío si el jugador no pertenece a un equipo
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 pt-3">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-rounded"
+          [disabled]="!jugadorForm.valid || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ loading ? 'Actualizando...' : 'Actualizar Jugador' }}
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary btn-rounded"
+          routerLink="/jugadores">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

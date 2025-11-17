@@ -3,5 +3,5 @@ export interface Equipo {
   nombre: string;
   ciudad: string;
   estadio: string;
-  anio_fundacion: number;
+  anio_fundacion: 0;
 }

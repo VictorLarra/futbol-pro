@@ -4,6 +4,6 @@ export interface Jugador {
   nombre: string;
   posicion: string;
   edad: number;
-  id_equipo: number;
+  id_equipo: number | null;
   equipo?: string; // opcional para mostrar nombre del equipo
 }

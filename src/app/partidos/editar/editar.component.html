@@ -1,0 +1,127 @@
+<!-- partidos/editar/editar.component.html -->
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Editar Partido</h2>
+    <a routerLink="/partidos" class="btn btn-outline-secondary btn-rounded">
+      ← Volver a Partidos
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">{{ error ? 'Actualizando partido...' : 'Cargando datos del partido...' }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Form -->
+  <div *ngIf="!loading && equipos.length > 0" class="custom-card p-4">
+    <form [formGroup]="partidoForm" (ngSubmit)="onSubmit()">
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Fecha y Hora <span class="text-danger">*</span></label>
+          <input 
+            type="datetime-local" 
+            class="form-control" 
+            formControlName="fecha"
+            [class.is-invalid]="partidoForm.get('fecha')?.invalid && partidoForm.get('fecha')?.touched">
+          <div class="invalid-feedback" *ngIf="partidoForm.get('fecha')?.invalid && partidoForm.get('fecha')?.touched">
+            La fecha es requerida
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Equipo Local <span class="text-danger">*</span></label>
+          <select 
+            class="form-control" 
+            formControlName="id_equipo_local"
+            [class.is-invalid]="partidoForm.get('id_equipo_local')?.invalid && partidoForm.get('id_equipo_local')?.touched">
+            <option value="">Seleccionar equipo local</option>
+            <option *ngFor="let equipo of equipos" [value]="equipo.id">
+              {{ equipo.nombre }}
+            </option>
+          </select>
+          <div class="invalid-feedback" *ngIf="partidoForm.get('id_equipo_local')?.invalid && partidoForm.get('id_equipo_local')?.touched">
+            El equipo local es requerido
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Equipo Visitante <span class="text-danger">*</span></label>
+          <select 
+            class="form-control" 
+            formControlName="id_equipo_visitante"
+            [class.is-invalid]="partidoForm.get('id_equipo_visitante')?.invalid && partidoForm.get('id_equipo_visitante')?.touched">
+            <option value="">Seleccionar equipo visitante</option>
+            <option *ngFor="let equipo of equipos" [value]="equipo.id">
+              {{ equipo.nombre }}
+            </option>
+          </select>
+          <div class="invalid-feedback" *ngIf="partidoForm.get('id_equipo_visitante')?.invalid && partidoForm.get('id_equipo_visitante')?.touched">
+            El equipo visitante es requerido
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Goles Local <span class="text-danger">*</span></label>
+          <input 
+            type="number" 
+            class="form-control" 
+            formControlName="goles_local"
+            min="0"
+            [class.is-invalid]="partidoForm.get('goles_local')?.invalid && partidoForm.get('goles_local')?.touched">
+          <div class="invalid-feedback" *ngIf="partidoForm.get('goles_local')?.errors?.['required'] && partidoForm.get('goles_local')?.touched">
+            Los goles local son requeridos
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Goles Visitante <span class="text-danger">*</span></label>
+          <input 
+            type="number" 
+            class="form-control" 
+            formControlName="goles_visitante"
+            min="0"
+            [class.is-invalid]="partidoForm.get('goles_visitante')?.invalid && partidoForm.get('goles_visitante')?.touched">
+          <div class="invalid-feedback" *ngIf="partidoForm.get('goles_visitante')?.errors?.['required'] && partidoForm.get('goles_visitante')?.touched">
+            Los goles visitante son requeridos
+          </div>
+        </div>
+      </div>
+
+      <!-- Validación equipos diferentes -->
+      <div *ngIf="!equiposDiferentes() && partidoForm.get('id_equipo_local')?.value && partidoForm.get('id_equipo_visitante')?.value" 
+           class="alert alert-warning">
+        ⚠️ El equipo local y visitante no pueden ser el mismo
+      </div>
+
+      <div class="d-flex gap-2 pt-3">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-rounded"
+          [disabled]="!partidoForm.valid || loading || !equiposDiferentes()">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ loading ? 'Actualizando...' : 'Actualizar Partido' }}
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary btn-rounded"
+          routerLink="/partidos">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

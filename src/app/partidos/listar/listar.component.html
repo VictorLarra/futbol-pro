@@ -1,0 +1,74 @@
+<!-- partidos/listar/listar.component.html -->
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Partidos</h2>
+    <a routerLink="/partidos/crear" class="btn btn-primary btn-rounded">
+      + Crear Partido
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando partidos...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Success State -->
+  <div *ngIf="!loading && !error" class="custom-card p-4">
+    <table class="table table-hover align-middle">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Local</th>
+          <th>Visitante</th>
+          <th>Resultado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let partido of partidos">
+          <td>{{ formatearFecha(partido.fecha) }}</td>
+          <td>
+            <span class="badge bg-primary">{{ partido.equipo_local_nombre }}</span>
+          </td>
+          <td>
+            <span class="badge bg-secondary">{{ partido.equipo_visitante_nombre }}</span>
+          </td>
+          <td>
+            <strong class="fs-5">{{ partido.goles_local }} - {{ partido.goles_visitante }}</strong>
+          </td>
+          <td>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-secondary btn-rounded"
+                      [routerLink]="['/partidos/editar', partido.id]">
+                Editar
+              </button>
+              <button class="btn btn-sm btn-outline-danger btn-rounded"
+                      (click)="eliminarPartido(partido.id)">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="partidos.length === 0 && !loading">
+          <td colspan="5" class="text-center py-4">
+            <p class="text-muted">No hay partidos registrados</p>
+            <a routerLink="/partidos/crear" class="btn btn-primary btn-sm">
+              Crear primer partido
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

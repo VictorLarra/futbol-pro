@@ -1,4 +1,4 @@
-<div class="container py-4">
+<!-- <div class="container py-4">
   <h2 class="mb-4">Crear Jugador</h2>
   
   <form [formGroup]="jugadorForm" (ngSubmit)="onSubmit()" class="custom-card p-4">
@@ -31,4 +31,131 @@
       </button>
     </div>
   </form>
+</div> -->
+<!-- jugadores/crear/crear.component.html -->
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Crear Jugador</h2>
+    <a routerLink="/jugadores" class="btn btn-outline-secondary btn-rounded">
+      ← Volver a Jugadores
+    </a>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading && equipos.length === 0" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando equipos...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- Form -->
+  <div *ngIf="!loading && equipos.length > 0" class="custom-card p-4">
+    <form [formGroup]="jugadorForm" (ngSubmit)="onSubmit()">
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Nombre <span class="text-danger">*</span></label>
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="nombre"
+            placeholder="Ej: Lionel Messi"
+            [class.is-invalid]="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
+            El nombre es requerido
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Posición <span class="text-danger">*</span></label>
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="posicion"
+            placeholder="Ej: Delantero, Mediocampista, Defensa"
+            [class.is-invalid]="jugadorForm.get('posicion')?.invalid && jugadorForm.get('posicion')?.touched">
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('posicion')?.invalid && jugadorForm.get('posicion')?.touched">
+            La posición es requerida
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Edad <span class="text-danger">*</span></label>
+          <input 
+            type="number" 
+            class="form-control" 
+            formControlName="edad"
+            min="16"
+            max="50"
+            [class.is-invalid]="jugadorForm.get('edad')?.invalid && jugadorForm.get('edad')?.touched">
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('edad')?.errors?.['required'] && jugadorForm.get('edad')?.touched">
+            La edad es requerida
+          </div>
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('edad')?.errors?.['min'] && jugadorForm.get('edad')?.touched">
+            La edad mínima es 16 años
+          </div>
+          <div class="invalid-feedback" *ngIf="jugadorForm.get('edad')?.errors?.['max'] && jugadorForm.get('edad')?.touched">
+            La edad máxima es 50 años
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Equipo</label>
+          <select 
+            class="form-control" 
+            formControlName="id_equipo">
+            <option [value]="null">Sin equipo (Agente Libre)</option>
+            <option *ngFor="let equipo of equipos" [value]="equipo.id">
+              {{ equipo.nombre }} ({{ equipo.ciudad }})
+            </option>
+          </select>
+          <div class="form-text">
+            Selecciona un equipo o deja como "Sin equipo" si es agente libre
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 pt-3">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-rounded"
+          [disabled]="!jugadorForm.valid || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ loading ? 'Creando...' : 'Crear Jugador' }}
+        </button>
+        
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary btn-rounded"
+          routerLink="/jugadores">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Mensaje cuando no hay equipos -->
+  <div *ngIf="equipos.length === 0 && !loading" class="alert alert-warning">
+    <h5>⚠️ No hay equipos registrados</h5>
+    <p>Puedes crear el jugador como agente libre, o primero crear equipos en el sistema.</p>
+    <div class="d-flex gap-2">
+      <a routerLink="/equipos/crear" class="btn btn-primary btn-sm">
+        Crear Equipo
+      </a>
+      <button 
+        type="button" 
+        class="btn btn-outline-primary btn-sm"
+        (click)="cargarEquipos()">
+        Reintentar carga de equipos
+      </button>
+    </div>
+  </div>
 </div>

@@ -1,38 +1,25 @@
-/* Contenedor general */
 .navbar {
-  background: #0d6efd; /* azul tipo bootstrap */
-  color: white;
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
+  padding: 1rem 0;
 }
 
-/* Logo */
-.navbar .logo {
-  font-size: 1.4rem;
-  font-weight: bold;
+.navbar-brand {
+  font-size: 1.5rem;
 }
 
-/* Menú */
-.navbar .menu {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
+.nav-link {
+  font-weight: 500;
+  margin: 0 0.5rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
-.navbar .menu li {
-  display: inline-block;
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
-.navbar .menu a {
-  color: white;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.navbar .menu a:hover {
-  text-decoration: underline;
+.nav-link.active {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #ffc107 !important;
 }

@@ -1,0 +1,4 @@
+.main-content {
+  padding-top: 80px; /* Para compensar el navbar fixed */
+  min-height: calc(100vh - 160px);
+}
